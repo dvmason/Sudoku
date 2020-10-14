@@ -14,30 +14,20 @@ Class {
 		'mutable',
 		'next',
 		'name',
-		'width'
+		'size'
 	],
 	#category : #Sudoku
 }
 
 { #category : #accessing }
 SudokuSquare >> connect: aBoard [ 
-	| lr lc hr hc size |
+	| width |
 	neighbours := OrderedCollection new.
 	size := aBoard size.
 	width := size*size.
-	lr := (row-1)//size*size+1. hr := lr+size-1.
-	lc := (col-1)//size*size+1. hc := lc+size-1.
 	1 to: width do: [: r |
 		1 to: width do: [: c |
-			(r=row ifTrue: [
-					c<col or: [ c>col ]
-				] ifFalse: [
-					c=col ifTrue: [
-						r<row or: [ r>row ]
-					] ifFalse: [
-						(r between: lr and: hr) and: [ c between: lc and: hc]
-					]
-				]) ifTrue: [ neighbours add: (aBoard atRow: r col: c) ]
+			(self isNeighbourOfRow: r col: c) ifTrue: [ neighbours add: (aBoard atRow: r col: c) ]
 		]
 	]
 
@@ -48,6 +38,22 @@ SudokuSquare >> fix [
 	mutable := value isNil.
 	next fix.
 
+]
+
+{ #category : #accessing }
+SudokuSquare >> isNeighbourOfRow: r col: c [
+	| lr lc |
+	lr := (row-1)//size*size+1.
+	lc := (col-1)//size*size+1.
+	^ r=row ifTrue: [
+					c<col or: [ c>col ]
+				] ifFalse: [
+					c=col ifTrue: [
+						r<row or: [ r>row ]
+					] ifFalse: [
+						(r between: lr and: lr+size-1) and: [ c between: lc and: lc+size-1]
+					]
+				]
 ]
 
 { #category : #accessing }
@@ -86,7 +92,7 @@ SudokuSquare >> solvable [
 	| solved |
 	solved := false.
 	mutable ifFalse: [ ^ next solvable ].
-	1 to: width do: [: try |
+	1 to: size*size do: [: try |
 		(neighbours noneSatisfy: [: nb | nb value=try ]) ifTrue: [
 			value := try.
 			next solvable ifTrue: [
