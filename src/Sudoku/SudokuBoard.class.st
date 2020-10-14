@@ -29,13 +29,13 @@ SudokuBoard class >> size: anInteger [
 
 { #category : #accessing }
 SudokuBoard >> at: colOrSquare put: value [
-	(board at: (colOrSquare size = 2 ifTrue: [colOrSquare] ifFalse: [ (colOrSquare,row asString) asSymbol ])) put: value.
+	(board at: (colOrSquare size > 1 ifTrue: [colOrSquare] ifFalse: [ (colOrSquare,row asString) asSymbol ])) put: value.
 
 ]
 
 { #category : #accessing }
 SudokuBoard >> atRow: r col: col [
-	^ board at: (('ABCDEFGHI' at: col) asString,r asString) asSymbol
+	^ board at: (('ABCDEFGHIJKLMNOPQRSTUVWXY' at: col) asString,r asString) asSymbol
 ]
 
 { #category : #initialization }
@@ -47,7 +47,7 @@ SudokuBoard >> fix [
 { #category : #initialization }
 SudokuBoard >> initialize [
 	super initialize.
-	board := IdentityDictionary new.
+	board := Dictionary new.
 
 ]
 
