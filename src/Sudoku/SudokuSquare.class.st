@@ -89,18 +89,14 @@ SudokuSquare >> row: r col: c next: sq [
 
 { #category : #solution }
 SudokuSquare >> solvable [
-	| solved |
-	solved := false.
 	mutable ifFalse: [ ^ next solvable ].
 	1 to: size*size do: [: try |
 		(neighbours noneSatisfy: [: nb | nb value=try ]) ifTrue: [
 			value := try.
-			next solvable ifTrue: [
-				solved := true
-			].
+			next solvable.
 	]].
 	value := nil.
-	^ solved
+
 ]
 
 { #category : #evaluating }

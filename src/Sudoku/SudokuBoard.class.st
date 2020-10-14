@@ -11,7 +11,8 @@ Class {
 	#instVars : [
 		'board',
 		'row',
-		'size'
+		'size',
+		'extraSquare'
 	],
 	#category : #Sudoku
 }
@@ -66,7 +67,7 @@ SudokuBoard >> size: anInteger [
 	| last width |
 	size := anInteger.
 	width := size*size.
-	last := SudokuSquareEnd new.
+	extraSquare := last := SudokuSquareEnd new.
 	width to: 1 by: -1 do: [: r |
 		width to: 1 by: -1 do: [: c |
 			last := SudokuSquare new row: r col: c next: last.
@@ -79,5 +80,6 @@ SudokuBoard >> size: anInteger [
 
 { #category : #solution }
 SudokuBoard >> solvable [
-	^ (board at: #A1) reset; solvable
+	(board at: #A1) reset; solvable.
+	^ extraSquare solved
 ]

@@ -27,3 +27,8 @@ SudokuSquareEnd >> solvable [
 	solved ifTrue: [ SudokuNotUnique signal ].
 	^ solved := true
 ]
+
+{ #category : #solution }
+SudokuSquareEnd >> solved [
+	^ solved
+]
