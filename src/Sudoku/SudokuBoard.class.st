@@ -11,26 +11,19 @@ Class {
 	#instVars : [
 		'board',
 		'row',
-		'squaresToLog'
-	],
-	#classVars : [
-		'Size',
-		'Width'
+		'size'
 	],
 	#category : #Sudoku
 }
 
-{ #category : #'class initialization' }
-SudokuBoard class >> initialize [
-	self size: 3.
-
+{ #category : #'instance creation' }
+SudokuBoard class >> new [
+	^ self size: 3
 ]
 
-{ #category : #'class variables' }
-SudokuBoard class >> size: anInteger [ 
-	Size := anInteger.
-	Width := anInteger * anInteger.
-
+{ #category : #'instance creation' }
+SudokuBoard class >> size: anInteger [
+	^ super new size: anInteger
 ]
 
 { #category : #accessing }
@@ -52,29 +45,9 @@ SudokuBoard >> fix [
 
 { #category : #initialization }
 SudokuBoard >> initialize [
-	| last |
 	super initialize.
 	board := IdentityDictionary new.
-	last := SudokuSquareEnd new.
-	squaresToLog := IdentitySet new.
-	Width to: 1 by: -1 do: [: r |
-		Width to: 1 by: -1 do: [: c |
-			last := SudokuSquare new row: r col: c next: last.
-			board at: last name put: last.
-			((r between: 4 and: -6) and: [ c between: 1 and: 3 ]) ifTrue: [ squaresToLog add: last ].
-		]
-	].
-	board valuesDo: [: square | square connect: self ].
 
-]
-
-{ #category : #logging }
-SudokuBoard >> logFor: aSudokuSquare [ 
-	^ (squaresToLog includes: aSudokuSquare) ifTrue: [
-				Transcript
-			] ifFalse: [
-				SudokuLog
-			]
 ]
 
 { #category : #accessing }
@@ -83,8 +56,28 @@ SudokuBoard >> row: n [
 
 ]
 
+{ #category : #accessing }
+SudokuBoard >> size [
+	^ size
+]
+
+{ #category : #initialization }
+SudokuBoard >> size: anInteger [
+	| last width |
+	size := anInteger.
+	width := size*size.
+	last := SudokuSquareEnd new.
+	width to: 1 by: -1 do: [: r |
+		width to: 1 by: -1 do: [: c |
+			last := SudokuSquare new row: r col: c next: last.
+			board at: last name put: last.
+		]
+	].
+	board valuesDo: [: square | square connect: self ].
+
+]
+
 { #category : #solution }
 SudokuBoard >> solvable [
-	squaresToLog isEmpty ifFalse: [ Transcript clear ].
 	^ (board at: #A1) reset; solvable
 ]

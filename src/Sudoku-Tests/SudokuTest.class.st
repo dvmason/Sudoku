@@ -11,7 +11,7 @@ Class {
 SudokuTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
 	super setUp.
-	s := SudokuBoard size: 3;new.
+	s := SudokuBoard new.
 
 ]
 
@@ -79,7 +79,7 @@ SudokuTest >> testMag3 [
 
 { #category : #tests }
 SudokuTest >> testNotUnique2 [
-	s := SudokuBoard size: 2;new.
+	s := SudokuBoard size: 2.
 	s
 		row: 1;
 		at: #C put: 1;
@@ -98,7 +98,7 @@ SudokuTest >> testNotUnique2 [
 
 { #category : #tests }
 SudokuTest >> testSolvable2 [
-	s := SudokuBoard size: 2;new.
+	s := SudokuBoard size: 2.
 	s
 		row: 1;
 		at: #A put: 3;
@@ -161,7 +161,7 @@ SudokuTest >> testSolvable3 [
 
 { #category : #tests }
 SudokuTest >> testUnsolvable2 [
-	s := SudokuBoard size: 2;new.
+	s := SudokuBoard size: 2.
 	s
 		row: 1;
 		at: #A put: 3;

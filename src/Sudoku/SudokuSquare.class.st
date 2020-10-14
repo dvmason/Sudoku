@@ -14,23 +14,21 @@ Class {
 		'mutable',
 		'next',
 		'name',
-		'log'
-	],
-	#pools : [
-		'SudokuBoard'
+		'width'
 	],
 	#category : #Sudoku
 }
 
 { #category : #accessing }
 SudokuSquare >> connect: aBoard [ 
-	| lr lc hr hc |
-	log := aBoard logFor: self.
+	| lr lc hr hc size |
 	neighbours := OrderedCollection new.
-	lr := (row-1)//Size*Size+1. hr := lr+Size-1.
-	lc := (col-1)//Size*Size+1. hc := lc+Size-1.
-	1 to: Width do: [: r |
-		1 to: Width do: [: c |
+	size := aBoard size.
+	width := size*size.
+	lr := (row-1)//size*size+1. hr := lr+size-1.
+	lc := (col-1)//size*size+1. hc := lc+size-1.
+	1 to: width do: [: r |
+		1 to: width do: [: c |
 			(r=row ifTrue: [
 					c<col or: [ c>col ]
 				] ifFalse: [
@@ -88,11 +86,9 @@ SudokuSquare >> solvable [
 	| solved |
 	solved := false.
 	mutable ifFalse: [ ^ next solvable ].
-	1 to: Width do: [: try |
-		log crShow: name;show: ':'; show: try;flush.
-		(neighbours noneSatisfy: [: nb | (nb valueShowOn: log)=try ]) ifTrue: [
+	1 to: width do: [: try |
+		(neighbours noneSatisfy: [: nb | nb value=try ]) ifTrue: [
 			value := try.
-			log show: ' -> '; show: value asString.
 			next solvable ifTrue: [
 				solved := true
 			].
@@ -103,15 +99,5 @@ SudokuSquare >> solvable [
 
 { #category : #evaluating }
 SudokuSquare >> value [
-	^ value
-]
-
-{ #category : #accessing }
-SudokuSquare >> valueShowOn: aStream [
-	value ifNil: [
-		aStream show: ' ('; show: name; show: ')'
-	] ifNotNil: [
-		aStream show: ' ('; show: name; show: ':'; show: value; show: ')'
-	].
 	^ value
 ]
