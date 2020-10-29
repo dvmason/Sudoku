@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'solved'
 	],
-	#category : #Sudoku
+	#category : #'Sudoku-Kernel'
 }
 
 { #category : #solution }

@@ -16,7 +16,7 @@ Class {
 		'name',
 		'size'
 	],
-	#category : #Sudoku
+	#category : #'Sudoku-Kernel'
 }
 
 { #category : #accessing }

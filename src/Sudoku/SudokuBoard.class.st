@@ -14,7 +14,7 @@ Class {
 		'size',
 		'extraSquare'
 	],
-	#category : #Sudoku
+	#category : #'Sudoku-Kernel'
 }
 
 { #category : #'instance creation' }

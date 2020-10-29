@@ -5,5 +5,5 @@ I am the exception raised if the end square is reached a second time, which impl
 Class {
 	#name : #SudokuNotUnique,
 	#superclass : #Error,
-	#category : #Sudoku
+	#category : #'Sudoku-Kernel'
 }
