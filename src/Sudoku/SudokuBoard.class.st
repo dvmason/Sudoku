@@ -79,7 +79,12 @@ SudokuBoard >> size: anInteger [
 ]
 
 { #category : #solution }
-SudokuBoard >> solvable [
-	(board at: #A1) reset; solvable.
+SudokuBoard >> solutionCount [
 	^ extraSquare solved
+]
+
+{ #category : #solution }
+SudokuBoard >> solvable [
+	[(board at: #A1) reset; solvable] on: SudokuNotUnique do: [ nil ].
+	^ self solutionCount = 1
 ]

@@ -18,14 +18,15 @@ SudokuSquareEnd >> fix [
 
 { #category : #solution }
 SudokuSquareEnd >> reset [
-	solved := false.
+	solved := 0.
 
 ]
 
 { #category : #solution }
 SudokuSquareEnd >> solvable [
-	solved ifTrue: [ SudokuNotUnique signal ].
-	^ solved := true
+	solved := solved + 1.
+	solved > 1 ifTrue: [ SudokuNotUnique signal ].
+	^ true
 ]
 
 { #category : #solution }

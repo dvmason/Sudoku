@@ -92,7 +92,8 @@ SudokuTest >> testNotUnique2 [
 		at: #C put: 4;
 		at: #D put: 3;
 		fix.
-	self should: [ s solvable ] raise: SudokuNotUnique.
+	self deny: [ s solvable ].
+	self assert: s solutionCount equals: 2.
 
 ]
 
@@ -177,12 +178,15 @@ SudokuTest >> testUnsolvable2 [
 		at: #D put: 3;
 		fix.
 	self deny: s solvable description: 'after initialization'.
+	self assert: s solutionCount equals: 0.
 
 ]
 
 { #category : #tests }
 SudokuTest >> testWild [
 	s fix.
-	self should: [ s solvable ] raise: SudokuNotUnique.
+	self deny: [ s solvable ].
+	self assert: s solutionCount equals: 2.
+
 
 ]
